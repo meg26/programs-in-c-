@@ -1,90 +1,67 @@
-
-
 #include<iostream>
-using namespace std;  
+#include<fstream>
+using namespace std;
 
- class student 
-{ 
-      protected:      
-            int  roll_number;      
-      public: 
-            void get_number()      
-  { 
-		cin>>roll_number;
-               
-  } 
-            void put_number()      
-  { 
-                  cout<<"Roll No:"<<roll_number<<"\n";      
-  } 
-}; 
-
-
- class test : public student 
-{ 
-      protected:      
-            float mark1, mark2;      
-	public: 
-            void get_marks() 
-  { 
-                 cin>>mark1;     
-                 cin>>mark2;    
-  } 
-            void put_marks(void)      
-  { 
-                  cout<<"Marks obtained"<<"\n"<<"mark1 ="<<mark1<<"\n"  <<"mark2 ="<<mark2<<"\n";      
-  } 
-}; 
-class sports 
-{ 
-      protected:      
-            float score;      
-public: 
-            void get_score()      
-  { 
-                  cin>>score;      
-  } 
-            void put_score()   
-                                                                   
-  { 
-                  cout<<"Sports score:"<<score<<"\n\n";      
-  } 
-}; 
+class students
+{
+	int st_id,rollno,mark1,mark2,mark3;
+	char name[20];
+public:
+	
+	void read()
+	{
+		cout<<"\nenter name :";
+		cin>>name;
+		cout<<"enter student id :";
+		cin>>st_id;
+		cout<<"enter rollno :";
+		cin>>rollno;
+		cout<<"enter mark1 :";
+		cin>>mark1;
+		cout<<"enter mark2 :";
+		cin>>mark2;		
+		cout<<"enter mark3 :";
+		cin>>mark3;
+	}
 
 
-class result : public test, public sports 
-{ 
-            float total;      
-      public:      
-             void display();      
-}; 
+	void display()
+	{
+		cout<<"\nname :"<<name<<"\nstudent id :"<<st_id<<"\nrollno :"<<rollno<<"\nmark1 :"<<mark1;
+		cout<<"\nmark2 :"<<mark2<<"\nmark3 :"<<mark3;
+	}
+
+};
+
+int main()
+{
+students s;
+ofstream obj1;
+obj1.open("student.txt");
+
+char op;
+do
+{
+	s.read();
+	obj1.write((char*)&s, sizeof(s));
+	cout<<"\nread more (y/n) ";
+	cin>>op;
+}while(op=='y');
+
+obj1.close();
 
 
-void result ::display() 
-{ 
-      int sum;
-      sum=mark1+mark2;
-      total = mark1 + mark2 + score; 
-      put_number();      
-      put_marks();      
-      put_score();
-      cout<<"sum of 2 marks : "<<sum<<endl;      
-      cout<<"Total Score:"<<total<<"\n";      
-} 
+ifstream obj2;
+obj2.open("student.txt",ios::in);
+obj2.read((char*)&s, sizeof(s));
 
+while(!obj2.eof())
+{
+	s.display();
+	obj2.read((char*)&s, sizeof(s));
+}
 
-
-int main() 
-{ 
-      result  student_1;
-      cout<<"enter the roll no: ";     
-      student_1.get_number ();      
-      cout<<"enter the mark1  and mark2 :"; 
-      student_1.get_marks ();
-      cout<<"enter the score";
-      student_1.get_score ();   
-      student_1.display() ;     
-
-}                                                                 
+obj2.close();
+}
 
 
